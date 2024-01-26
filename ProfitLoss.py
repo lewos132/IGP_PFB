@@ -61,6 +61,7 @@ def profit_calc():
 
 
 profit_calc()
+print("hehehehaw")
 
 
 
