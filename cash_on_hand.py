@@ -9,7 +9,7 @@
 from pathlib import Path
 import csv
 
-def coh():
+def coh_function():
     fp = Path.cwd()/"IGP_PFB/csv_reports/cash_on_hand.csv"
 
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
@@ -36,7 +36,7 @@ def coh():
             dailycash[day] = [cash]
         
     # create a list to store all the diffs, use .sort() to order them, use splicing to get the first three x[1:4]
-    empty_list = []
+    cash_list = []
 
     for date in range(11, len(dailycash)-1):
         previous_day = date
@@ -44,16 +44,38 @@ def coh():
 
         diff = dailycash[current_day][0] - dailycash[previous_day][0]
 
-        empty_list.append((round(diff), current_day)) #[difference, current_day]
+        if diff <0:
+            cash_list.append((round(diff), current_day)) #[difference, current_day]
+        else:
+            pass
 
-    empty_list.sort()
 
-    cash_deficit_top1 = empty_list[0]
-    cash_deficit_top2 = empty_list[1]
-    cash_deficit_top3 = empty_list[2]
+    #key parameter to sort by days
+    def coh_key(profitdeficits): 
+        return profitdeficits[1]
+    
+    cash_list.sort(key= coh_key)
 
-    return cash_deficit_top1, cash_deficit_top2, cash_deficit_top3
-print(coh())
+    output_coh = ''
+
+    for amount, day in cash_list:
+        output_coh += f'[CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+    #sort by descending order of amount
+    cash_list.sort()
+
+    for amount, day in cash_list[:1]:
+        output_coh += f'[HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+    
+    for amount, day in cash_list[1:2]:
+        output_coh += f'[2ND HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+    for amount, day in cash_list[2:3]:
+        output_coh += f'[3RD HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+
+    return output_coh
+
 
 
 

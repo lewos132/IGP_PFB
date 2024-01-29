@@ -10,7 +10,7 @@
 from pathlib import Path
 import csv
 
-def profit_calc():
+def profitloss_function():
     fp = Path.cwd()/"IGP_PFB/csv_reports/profit_and_Loss.csv"
 
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
@@ -33,12 +33,11 @@ def profit_calc():
         else:
             dailyProfit[day] = [profit]
 
-
         for key,value in dailyProfit.items():
             dailyProfit[day] = [profit]
         
     # create a list to store all the diffs, use .sort() to order them, use splicing to get the first three x[1:4]
-    empty_list = []
+    profitdeficit_list = []
 
     for date in range(11, len(dailyProfit)-1):
         previous_day = date
@@ -46,15 +45,39 @@ def profit_calc():
 
         diff = dailyProfit[current_day][0] - dailyProfit[previous_day][0]
 
-        empty_list.append((round(diff), current_day)) #[difference, current_day]
+        if diff < 0:
+            profitdeficit_list.append((round(diff), current_day))
+        else:
+            pass
+    
+    #key parameter to sort by days
+    def profitdeficit_key(profitdeficits): 
+        return profitdeficits[1]
+    
+    #sort by days
+    profitdeficit_list.sort(key= profitdeficit_key)
 
-    empty_list.sort()
+    output_loss = ''
 
-    profit_deficit_top1 = empty_list[0]
-    profit_deficit_top2 = empty_list[1]
-    profit_deficit_top3 = empty_list[2]
+    for amount, day in profitdeficit_list:
+        output_loss += f'[NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
-    return profit_deficit_top1, profit_deficit_top2, profit_deficit_top3
+    #sort by descending order of amount
+    profitdeficit_list.sort()
+
+    for amount, day in profitdeficit_list[:1]:
+        output_loss += f'[HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+    
+    for amount, day in profitdeficit_list[1:2]:
+        output_loss += f'[2ND HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+    for amount, day in profitdeficit_list[2:3]:
+        output_loss += f'[3RD HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+    
+    return output_loss
+
+
 
 
 
