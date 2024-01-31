@@ -18,7 +18,7 @@ def overhead_function():
         for row in reader:
             overheads.append([row[0],float(row[1])]) 
 
-    # define function for sorting
+    # define function used as a key for sorting
     def overhead_key(overhead):
         '''
         key parameter to sort cash_list by days
