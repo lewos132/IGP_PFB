@@ -21,11 +21,11 @@ def coh_function():
         for row in reader:
             cash_on_hand.append([row[0],row[1]]) 
 
-    dailycash = {} # {Day: amount}
+    dailycash = {} # {Day: amount} 
 
     for cashes_on_hand in cash_on_hand: # iterate through every value of cash_on_hand
-        day = int(cashes_on_hand[0]) # assign day value
-        cash = float(cashes_on_hand[1]) # assigning cash value
+        day = int(cashes_on_hand[0]) # assigning the day value
+        cash = float(cashes_on_hand[1]) # assigning the cash value
 
         # add key-value pairs into dailycash dict
         if day in dailycash: 
@@ -78,7 +78,7 @@ def coh_function():
         '''
         return cashdeficits[1]
         
-    cash_list.sort(key= coh_key) # sort by day in ascending order, key paramter is used to specify a function onto each list
+    cash_list.sort(key= coh_key) # sort by day in ascending order, key parameter is used to specify a function onto each list
 
     output_coh = '' # empty string 
 
