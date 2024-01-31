@@ -1,4 +1,4 @@
-# Cash-On-Hand csv: The program will firstly compute the
+# Cash-On-Hand csv: The program will firstly compute the following 
 # difference in Cash-on-Hand. If the cash-on-hand is always
 # increasing, find out the day and amount the highest
 # increment occurs. If the cash-on-hand is always decreasing,
@@ -44,7 +44,7 @@ def coh_function():
         previous_day = date
         current_day = date + 1
 
-        diff = dailycash[current_day][0] - dailycash[previous_day][0] # calculating difference
+        diff = dailycash[current_day][0] - dailycash[previous_day][0] # calculate differences
 
         cash_list.append([round(diff), current_day]) # append into as list [diff, current_day]
 
