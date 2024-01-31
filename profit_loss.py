@@ -67,7 +67,6 @@ def profitloss_function():
 
 
     
-    #key parameter to sort by days
     
 
     output_loss = ''
@@ -94,6 +93,7 @@ def profitloss_function():
         
         #sort by days
         profitdeficit_list.sort(key= profitdeficit_key)
+        
         for amount, day in profitdeficit_list:
             output_loss += f'[NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
@@ -109,25 +109,4 @@ def profitloss_function():
         for amount, day in profitdeficit_list[2:3]:
             output_loss += f'[3RD HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
-    
     return output_loss
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-

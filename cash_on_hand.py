@@ -67,6 +67,8 @@ def coh_function():
 
     else: # for scenarios where always increasing or decreasing
         cash_list.sort()
+
+        
     output_coh = '' # empty string 
 
     if lowest_value >0:
@@ -110,19 +112,3 @@ def coh_function():
 
 
     return output_coh
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
