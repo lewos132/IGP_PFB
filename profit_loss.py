@@ -10,45 +10,58 @@
 from pathlib import Path
 import csv
 
+# define file path to profit and loss csv file
 def profitloss_function():
     fp = Path.cwd()/"IGP_PFB/csv_reports/profit_and_loss.csv"
 
+    # open csv file in read mode
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         reader = csv.reader(file)
         next(reader) # skip header
 
+        # create empty list to store data
         ProfitandLoss=[] 
 
+        # iterate through each row in the csv file
         for row in reader:
             ProfitandLoss.append([row[0],row[4]]) 
 
+    # create dictionary to store daily profits
     dailyProfit = {} # {Day: amount}
 
+    # process profit and loss entries
     for ProfitandLosses in ProfitandLoss: 
         day = int(ProfitandLosses[0])
         profit = float(ProfitandLosses[1])
 
+        # accumulate profit for each day
         if day in dailyProfit:
             dailyProfit[day][0] += profit
         else:
             dailyProfit[day] = [profit]
 
+        # update daily profit
         for key,value in dailyProfit.items():
             dailyProfit[day] = [profit]
         
     # create a list to store all the diffs, use .sort() to order them, use splicing to get the first three x[1:4]
     profitdeficit_list = []
 
+    # calculate daily profit differences
     for date in range(11, len(dailyProfit)-1):
         previous_day = date
         current_day = date + 1
 
+        # calculate profit difference between two consecutive days
         diff = dailyProfit[current_day][0] - dailyProfit[previous_day][0]
 
+        # add difference and current day to list
         profitdeficit_list.append((round(diff), current_day))
 
+        # sort list in descending order of profit difference
         profitdeficit_list.sort(reverse=True)
 
+    # identify highest and lowest profit differences
     lowest_value = profitdeficit_list[-1][0] 
     highest_value = profitdeficit_list[0][0]
 
@@ -64,10 +77,6 @@ def profitloss_function():
 
     else:
         profitdeficit_list.sort()
-
-
-    
-    
 
     output_loss = ''
     if lowest_value >0:
