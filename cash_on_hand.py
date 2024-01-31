@@ -23,43 +23,67 @@ def coh_function():
 
     dailycash = {} # {Day: amount}
 
-    for cashes_on_hand in cash_on_hand: 
-        day = int(cashes_on_hand[0])
-        cash = float(cashes_on_hand[1])
+    for cashes_on_hand in cash_on_hand: # iterate through every value of cash_on_hand
+        day = int(cashes_on_hand[0]) # assign day value
+        cash = float(cashes_on_hand[1]) # assigning cash value
 
-        if day in dailycash:
+        # add key-value pairs into dailycash dict
+        if day in dailycash: 
             dailycash[day][0] += cash
         else:
             dailycash[day] = [cash]
- 
-        for key,value in dailycash.items():
+    
+        # sets value(cash) assigned to key(day) into a list containing only the value, cash
+        for key,value in dailycash.items(): # iterates key-value pairs
             dailycash[day] = [cash]
-        
-    # create a list to store all the diffs, use .sort() to order them, use splicing to get the first three x[1:4]
+    
+    # created a list to store all the diffs and days
     cash_list = []
 
-    for date in range(11, len(dailycash)-1):
+    for date in range(11, len(dailycash)-1): # for days starting from 11 to 90
         previous_day = date
         current_day = date + 1
 
-        diff = dailycash[current_day][0] - dailycash[previous_day][0]
+        diff = dailycash[current_day][0] - dailycash[previous_day][0] # calculating difference
 
-        if diff <0:
-            cash_list.append((round(diff), current_day)) #[difference, current_day]
-        else:
-            pass
+        cash_list.append([round(diff), current_day]) # append into as list [diff, current_day]
+
+        #key parameter to sort from highest to lowest
+        cash_list.sort(reverse=True)
+
+    # to compare if cash on hand is always increasing, always decreasing or fluctuating
+    lowest_value = cash_list[-1][0] 
+    highest_value = cash_list[0][0]
+
+    deficit_cash_list = [] # temp list to store values if fluctuating
+
+    if highest_value != lowest_value: # for scenario where differences fluctates
+        for deficit in cash_list: # iterates through every value
+            if deficit[0] < 0: # if difference less than 0
+                deficit_cash_list.append(deficit) 
+            else:
+                pass # to only get the days where there's deficit
+
+        cash_list = deficit_cash_list # assigning temp list to cash_list
+
+    else: # for scenarios where always increasing or decreasing
+        pass
 
 
-    #key parameter to sort by days
-    def coh_key(profitdeficits): 
-        return profitdeficits[1]
-    
-    cash_list.sort(key= coh_key)
+    def coh_key(cashdeficits): 
+        '''
+        key parameter to sort cash_list by days
+        1 parameter required: profit deficits
+        parameter is served as a placeholder
+        '''
+        return cashdeficits[1]
+        
+    cash_list.sort(key= coh_key) # sort by day in ascending order, key paramter is used to specify a function onto each list
 
-    output_coh = ''
+    output_coh = '' # empty string 
 
     for amount, day in cash_list:
-        output_coh += f'[CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+        output_coh += f'[CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n' # add in days where cash deficit occurs 
 
     #sort by descending order of amount
     cash_list.sort()
@@ -75,6 +99,7 @@ def coh_function():
 
 
     return output_coh
+
 
 
 

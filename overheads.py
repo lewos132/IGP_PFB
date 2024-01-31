@@ -15,9 +15,14 @@ def overhead_function():
             overheads.append([row[0],float(row[1])]) 
     
     def overhead_key(overhead):
+        '''
+        key parameter to sort cash_list by days
+        1 parameter required: profit deficits
+        parameter is served as a placeholder
+        ''' 
         return -overhead[1]
     
-    overheads.sort(key= overhead_key)
+    overheads.sort(key= overhead_key) # sorted in descending order, key paramter is used to specify a function onto each list
 
     highest_overhead = f'[HIGHEST OVERHEAD] {overheads[0][0].upper()}: {overheads[0][1]}%'
 

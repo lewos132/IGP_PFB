@@ -45,13 +45,34 @@ def profitloss_function():
 
         diff = dailyProfit[current_day][0] - dailyProfit[previous_day][0]
 
-        if diff < 0:
-            profitdeficit_list.append((round(diff), current_day))
+        profitdeficit_list.append((round(diff), current_day))
+
+        profitdeficit_list.sort(reverse=True)
+
+    lowest_value = profitdeficit_list[-1][0] 
+    highest_value = profitdeficit_list[0][0]
+
+    deficit_profit_list = [] # temp list to store values if fluctuating
+
+    if highest_value != lowest_value:
+        for deficit in profitdeficit_list:
+            if deficit[0] < 0:
+                deficit_profit_list.append(deficit)
+            else:
+                pass
         else:
             pass
+
+    profitdeficit_list = deficit_profit_list
+
     
     #key parameter to sort by days
     def profitdeficit_key(profitdeficits): 
+        '''
+        key parameter to sort cash_list by days
+        1 parameter required: profitdeficits
+        parameter is served as a placeholder
+        '''
         return profitdeficits[1]
     
     #sort by days
@@ -76,6 +97,8 @@ def profitloss_function():
 
     
     return output_loss
+
+
 
 
 
