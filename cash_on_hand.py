@@ -51,7 +51,7 @@ def coh_function():
         #key parameter to sort from highest to lowest
         cash_list.sort(reverse=True)
 
-    # to compare if cash on hand is always increasing, always decreasing or fluctuating
+    # To evaluate whether cash on hand is constantly increasing, decreasing or fluctuating
     lowest_value = cash_list[-1][0] 
     highest_value = cash_list[0][0]
 
@@ -66,7 +66,7 @@ def coh_function():
 
         cash_list = deficit_cash_list # assigning temp list to cash_list
 
-    else: # for scenarios where always increasing or decreasing
+    else: # in scenarios where there is a constant increase or decrease
         pass
 
 
