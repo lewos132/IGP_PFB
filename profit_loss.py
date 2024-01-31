@@ -11,7 +11,7 @@ from pathlib import Path
 import csv
 
 def profitloss_function():
-    fp = Path.cwd()/"IGP_PFB/csv_reports/profit_and_Loss.csv"
+    fp = Path.cwd()/"IGP_PFB/csv_reports/profit_and_loss.csv"
 
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         reader = csv.reader(file)
@@ -54,51 +54,63 @@ def profitloss_function():
 
     deficit_profit_list = [] # temp list to store values if fluctuating
 
-    if highest_value != lowest_value:
+    if highest_value> 0 and lowest_value< 0:
         for deficit in profitdeficit_list:
             if deficit[0] < 0:
                 deficit_profit_list.append(deficit)
             else:
                 pass
-        else:
-            pass
+        profitdeficit_list = deficit_profit_list
 
-    profitdeficit_list = deficit_profit_list
+    else:
+        profitdeficit_list.sort()
+
 
     
     #key parameter to sort by days
-    def profitdeficit_key(profitdeficits): 
-        '''
-        key parameter to sort cash_list by days
-        1 parameter required: profitdeficits
-        parameter is served as a placeholder
-        '''
-        return profitdeficits[1]
     
-    #sort by days
-    profitdeficit_list.sort(key= profitdeficit_key)
 
     output_loss = ''
+    if lowest_value >0:
+        output_loss += f'[NET PROFIT SURPLUS] NET PROFIT ON EACH DAY IS HIGHER THAN THE PREVIOUS DAY\n'
 
-    for amount, day in profitdeficit_list:
-        output_loss += f'[NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+        for amount, day in profitdeficit_list[:1]:
+            output_loss += f'[HIGHEST NET PROFIT SURPLUS] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
-    #sort by descending order of amount
-    profitdeficit_list.sort()
+    elif highest_value <0:
+        output_loss += f'[NET PROFIT DEFICIT] NET PROFIT ON EACH DAY IS lower THAN THE PREVIOUS DAY\n'
 
-    for amount, day in profitdeficit_list[:1]:
-        output_loss += f'[HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
-    
-    for amount, day in profitdeficit_list[1:2]:
-        output_loss += f'[2ND HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+        for amount, day in profitdeficit_list[:1]:
+            output_loss += f'[HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
-    for amount, day in profitdeficit_list[2:3]:
-        output_loss += f'[3RD HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+    else:
+        def profitdeficit_key(profitdeficits): 
+            '''
+            key parameter to sort cash_list by days
+            1 parameter required: profitdeficits
+            parameter is served as a placeholder
+            '''
+            return profitdeficits[1]
+        
+        #sort by days
+        profitdeficit_list.sort(key= profitdeficit_key)
+        for amount, day in profitdeficit_list:
+            output_loss += f'[NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+        #sort by descending order of amount
+        profitdeficit_list.sort()
+
+        for amount, day in profitdeficit_list[:1]:
+            output_loss += f'[HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+        
+        for amount, day in profitdeficit_list[1:2]:
+            output_loss += f'[2ND HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+        for amount, day in profitdeficit_list[2:3]:
+            output_loss += f'[3RD HIGHEST NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
     
     return output_loss
-
-
 
 
 

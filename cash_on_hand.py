@@ -10,7 +10,7 @@ from pathlib import Path
 import csv
 
 def coh_function():
-    fp = Path.cwd()/"IGP_PFB/csv_reports/cash_on_hand.csv"
+    fp = Path.cwd()/"IGP_PFB/csv_reports/test.csv"
 
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         reader = csv.reader(file)
@@ -57,50 +57,59 @@ def coh_function():
 
     deficit_cash_list = [] # temp list to store values if fluctuating
 
-    if highest_value != lowest_value: # for scenario where differences fluctates
+    if highest_value> 0 and lowest_value< 0: # for scenario where differences fluctates
         for deficit in cash_list: # iterates through every value
             if deficit[0] < 0: # if difference less than 0
                 deficit_cash_list.append(deficit) 
             else:
                 pass # to only get the days where there's deficit
-
         cash_list = deficit_cash_list # assigning temp list to cash_list
 
     else: # for scenarios where always increasing or decreasing
-        pass
-
-
-    def coh_key(cashdeficits): 
-        '''
-        key parameter to sort cash_list by days
-        1 parameter required: profit deficits
-        parameter is served as a placeholder
-        '''
-        return cashdeficits[1]
-        
-    cash_list.sort(key= coh_key) # sort by day in ascending order, key paramter is used to specify a function onto each list
-
+        cash_list.sort()
     output_coh = '' # empty string 
 
-    for amount, day in cash_list:
-        output_coh += f'[CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n' # add in days where cash deficit occurs 
+    if lowest_value >0:
+        output_coh += f'[CASH SURPLUS] CASH ON EACH DAY IS HIGHER THAN THE PREVIOUS DAY\n' # add in days where cash surplus occurs 
+        
 
-    #sort by descending order of amount
-    cash_list.sort()
+        for amount, day in cash_list[:1]:
+            output_coh += f'[HIGHEST CASH SURPLUS] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
-    for amount, day in cash_list[:1]:
-        output_coh += f'[HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
-    
-    for amount, day in cash_list[1:2]:
-        output_coh += f'[2ND HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+    elif highest_value <0:
+        output_coh += f'[CASH DEFICIT] CASH ON EACH DAY IS LOWER THAN THE PREVIOUS DAY\n' # add in days where cash deficit occurs 
 
-    for amount, day in cash_list[2:3]:
-        output_coh += f'[3RD HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+        for amount, day in cash_list[:1]:
+            output_coh += f'[HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+    else:
+        def coh_key(cashdeficits): 
+            '''
+            key parameter to sort cash_list by days
+            1 parameter required: profit deficits
+            parameter is served as a placeholder
+            '''
+            return cashdeficits[1]
+        
+        cash_list.sort(key= coh_key) # sort by day in ascending order, key paramter is used to specify a function onto each list
+
+        for amount, day in cash_list:
+            output_coh += f'[CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n' # add in days where cash deficit occurs 
+
+        #sort by descending order of amount
+        cash_list.sort()
+
+        for amount, day in cash_list[:1]:
+            output_coh += f'[HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+        
+        for amount, day in cash_list[1:2]:
+            output_coh += f'[2ND HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
+
+        for amount, day in cash_list[2:3]:
+            output_coh += f'[3RD HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
 
     return output_coh
-
-
 
 
 
