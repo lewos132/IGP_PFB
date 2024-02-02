@@ -12,7 +12,7 @@ import csv
 
 # define file path to profit and loss csv file
 def profitloss_function():
-    fp = Path.cwd()/"IGP_PFB/csv_reports/profit_and_loss.csv"
+    fp = Path.cwd()/"project_group/csv_reports/profit_and_loss.csv"
 
     # open csv file in read mode
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
@@ -40,8 +40,8 @@ def profitloss_function():
         else:
             dailyProfit[day] = [profit]
 
-        # update daily profit
-        for key,value in dailyProfit.items():
+        # sets value(profit) assigned to key(day) into a list containing only the value, profit
+        for key,value in dailyProfit.items(): # iterates key-value pairs
             dailyProfit[day] = [profit]
         
     # create a list to store all the diffs, use .sort() to order them, use splicing to get the first three x[1:4]
@@ -67,25 +67,25 @@ def profitloss_function():
 
     deficit_profit_list = [] # temp list to store values if fluctuating
 
-    if highest_value> 0 and lowest_value< 0:
-        for deficit in profitdeficit_list:
-            if deficit[0] < 0:
+    if highest_value> 0 and lowest_value< 0: # for scenario where differences fluctates
+        for deficit in profitdeficit_list: # iterates through every value
+            if deficit[0] < 0: # if difference less than 0
                 deficit_profit_list.append(deficit)
             else:
-                pass
-        profitdeficit_list = deficit_profit_list
-
-    else:
+                pass # to only get the days where there's deficit
+        profitdeficit_list = deficit_profit_list # assigning temp list to cash_list
+    else: # for scenarios where always increasing or decreasing
         profitdeficit_list.sort()
 
-    output_loss = ''
-    if lowest_value >0:
+    output_loss = '' # empty string to store format of output
+
+    if lowest_value >0: # for net profit always increasing
         output_loss += f'[NET PROFIT SURPLUS] NET PROFIT ON EACH DAY IS HIGHER THAN THE PREVIOUS DAY\n'
 
         for amount, day in profitdeficit_list[:1]:
             output_loss += f'[HIGHEST NET PROFIT SURPLUS] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
-    elif highest_value <0:
+    elif highest_value <0: # for net profit always decreasing
         output_loss += f'[NET PROFIT DEFICIT] NET PROFIT ON EACH DAY IS lower THAN THE PREVIOUS DAY\n'
 
         for amount, day in profitdeficit_list[:1]:

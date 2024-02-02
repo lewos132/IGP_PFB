@@ -10,7 +10,7 @@ from pathlib import Path
 import csv
 
 def coh_function():
-    fp = Path.cwd()/"IGP_PFB/csv_reports/test.csv"
+    fp = Path.cwd()/"project_group/csv_reports/cash_on_hand.csv" #
 
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         reader = csv.reader(file)
@@ -64,24 +64,22 @@ def coh_function():
             else:
                 pass # to only get the days where there's deficit
         cash_list = deficit_cash_list # assigning temp list to cash_list
-
     else: # for scenarios where always increasing or decreasing
         cash_list.sort()
 
         
-    output_coh = '' # empty string 
+    output_coh = '' # empty string to store format of output
 
-    if lowest_value >0:
+    if lowest_value >0: # for cash surplus
         output_coh += f'[CASH SURPLUS] CASH ON EACH DAY IS HIGHER THAN THE PREVIOUS DAY\n' # add in days where cash surplus occurs 
         
-
-        for amount, day in cash_list[:1]:
+        for amount, day in cash_list[:1]: # select first data
             output_coh += f'[HIGHEST CASH SURPLUS] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
-    elif highest_value <0:
+    elif highest_value <0: # for cash deficit
         output_coh += f'[CASH DEFICIT] CASH ON EACH DAY IS LOWER THAN THE PREVIOUS DAY\n' # add in days where cash deficit occurs 
 
-        for amount, day in cash_list[:1]:
+        for amount, day in cash_list[:1]: # select first data
             output_coh += f'[HIGHEST CASH DEFICIT] DAY: {day}, AMOUNT: SGD{abs(amount)}\n'
 
     else:

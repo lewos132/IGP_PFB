@@ -4,7 +4,7 @@ import csv
 
 # define file path to overheads.csv file
 def overhead_function():
-    fp = Path.cwd()/"IGP_PFB/csv_reports/overheads.csv"
+    fp = Path.cwd()/"project_group/csv_reports/overheads.csv"
 
     # open csv file in read mode
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
@@ -31,7 +31,7 @@ def overhead_function():
     overheads.sort(key= overhead_key) 
 
     # format and store highest overhead information
-    highest_overhead = f'[HIGHEST OVERHEAD] {overheads[0][0].upper()}: {overheads[0][1]}%'
+    highest_overhead = f'[HIGHEST OVERHEAD] {overheads[0][0].upper()}: {overheads[0][1]}%\n'
 
     return highest_overhead
 
