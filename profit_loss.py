@@ -12,8 +12,7 @@ import csv
 
 # define file path to profit and loss csv file
 def profitloss_function():
-    fp = Path.cwd()/"project_group/csv_reports/profit_and_loss.csv"
-
+    fp = Path.cwd()/"project_group/csv_reports/Profit_and_Loss.csv"
     # open csv file in read mode
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         reader = csv.reader(file)

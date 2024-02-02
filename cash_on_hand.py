@@ -10,7 +10,7 @@ from pathlib import Path
 import csv
 
 def coh_function():
-    fp = Path.cwd()/"project_group/csv_reports/cash_on_hand.csv" 
+    fp = Path.cwd()/"project_group/csv_reports/Cash_on_Hand.csv" 
 
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
         reader = csv.reader(file)

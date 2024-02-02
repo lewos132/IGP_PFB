@@ -4,7 +4,7 @@ import csv
 
 # define file path to overheads.csv file
 def overhead_function():
-    fp = Path.cwd()/"project_group/csv_reports/overheads.csv"
+    fp = Path.cwd()/"project_group/csv_reports/Overheads.csv"
 
     # open csv file in read mode
     with fp.open(mode="r", encoding="UTF-8", newline="") as file:
