@@ -21,8 +21,8 @@ def overhead_function():
     # define function used as a key for sorting
     def overhead_key(overhead):
         '''
-        key parameter to sort cash_list by days
-        1 parameter required: profit deficits
+        key parameter to sort overheads by amount
+        1 parameter required: overhead
         parameter is served as a placeholder
         ''' 
         return -overhead[1]
